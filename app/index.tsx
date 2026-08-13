@@ -60,6 +60,23 @@ const SAVINGS_RATE_KEY = '@savings_rate_data';
 const THEME_KEY = '@theme_data';
 
 export default function HomeScreen() {
+  // Injection du style d'impression pour le Web
+useEffect(() => {
+    if (typeof document !== 'undefined') {
+      const style = document.createElement('style');
+      style.innerHTML = `
+        @media print {
+          body, html, div { height: auto !important; max-height: none !important; overflow: visible !important; position: static !important; }
+          button { display: none !important; }
+        }
+      `;
+      document.head.appendChild(style);
+      return () => {
+        document.head.removeChild(style);
+      };
+    }
+  }, []);
+
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [text, setText] = useState('');
   const [amount, setAmount] = useState('');
@@ -295,7 +312,6 @@ export default function HomeScreen() {
       return;
     }
 
-    // Calculs globaux pour le rapport
     const totalRevenus = transactions.filter(t => t.type === 'income').reduce((acc, t) => acc + t.amount, 0);
     const totalDepensesBrutes = transactions.filter(t => t.type === 'expense').reduce((acc, t) => acc + t.amount, 0);
     const totalRemboursements = transactions.filter(t => t.type === 'remboursement').reduce((acc, t) => acc + t.amount, 0);
@@ -653,7 +669,6 @@ export default function HomeScreen() {
                 </tr>
               ))}
             </tbody>
-            {/* Ajout du total également sur la version Web */}
             <tfoot>
               <tr style={{ background: '#eef2f5', fontWeight: 'bold', borderTop: '2px solid #0984e3' }}>
                 <td colSpan={3} style={{ padding: '15px', textAlign: 'right', fontSize: '16px' }}>SOLDE TOTAL :</td>
@@ -769,7 +784,6 @@ const styles = StyleSheet.create({
   deleteText: { color: '#ffffff', fontWeight: 'bold', fontSize: 12 },
   modalOverlay: { flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.5)', justifyContent: 'center', alignItems: 'center', padding: 20 },
   modalContent: { width: '100%', borderRadius: 12, padding: 20, elevation: 5 },
-  
 });
 
 const lightStyles = StyleSheet.create({
@@ -797,4 +811,3 @@ const darkStyles = StyleSheet.create({
   badge: { backgroundColor: '#485460', color: '#dcdde1' },
   toggleBg: { backgroundColor: '#3d3d3d' },
 });
-
