@@ -769,6 +769,7 @@ const styles = StyleSheet.create({
   deleteText: { color: '#ffffff', fontWeight: 'bold', fontSize: 12 },
   modalOverlay: { flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.5)', justifyContent: 'center', alignItems: 'center', padding: 20 },
   modalContent: { width: '100%', borderRadius: 12, padding: 20, elevation: 5 },
+  
 });
 
 const lightStyles = StyleSheet.create({
@@ -796,3 +797,4 @@ const darkStyles = StyleSheet.create({
   badge: { backgroundColor: '#485460', color: '#dcdde1' },
   toggleBg: { backgroundColor: '#3d3d3d' },
 });
+
