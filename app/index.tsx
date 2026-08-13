@@ -60,14 +60,28 @@ const SAVINGS_RATE_KEY = '@savings_rate_data';
 const THEME_KEY = '@theme_data';
 
 export default function HomeScreen() {
-  // Injection du style d'impression pour le Web
-useEffect(() => {
+// Injection du style d'impression pour le Web (version propre)
+  useEffect(() => {
     if (typeof document !== 'undefined') {
       const style = document.createElement('style');
       style.innerHTML = `
         @media print {
-          body, html, div { height: auto !important; max-height: none !important; overflow: visible !important; position: static !important; }
-          button { display: none !important; }
+          /* Masquer les formulaires, les champs de saisie, les boutons et les filtres */
+          input, button, .themeToggle, .addButton, 
+          .typeToggleContainer, .categoryContainer, 
+          .checkboxContainer, .filterContainer {
+            display: none !important;
+          }
+          
+          /* Ne garder que le résumé, les graphiques et l'historique propre */
+          body, html, div { 
+            height: auto !important; 
+            max-height: none !important; 
+            overflow: visible !important; 
+            position: static !important; 
+            background: #ffffff !important;
+            color: #000000 !important;
+          }
         }
       `;
       document.head.appendChild(style);
